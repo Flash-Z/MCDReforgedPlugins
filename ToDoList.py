@@ -30,12 +30,12 @@ list_dic = {}
 
 def read():
     global list_dic
-    with open(config_path, encoding='utf8') as f:
+    with open(config_path, encoding='utf-8') as f:
         list_dic = json.load(f)
 
 
 def save():
-    with open(config_path, 'w', encoding='utf8') as f:
+    with open(config_path, 'w', encoding='utf-8') as f:
         json.dump(list_dic, f, indent=4, ensure_ascii=False)
 
 def search(name):
