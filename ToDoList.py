@@ -62,7 +62,7 @@ def operate_list(server, info, args):
                 list_msg = RTextList(
                     f'- ',
                     RText(f'§b{name}').c(RAction.suggest_command, 
-                                         f'!!td add {name} {list_dic.get(name)["detail"][1]} {list_dic.get(name)["progress"]}')
+                                         f'!!td add {name} {list_dic.get(name)["detail"]} {list_dic.get(name)["progress"]}')
                     .h(
                         f'§r点击项目名称以修改信息\n'
                         f'§7创建者:§6 {list_dic.get(name)["creator"]}\n',
