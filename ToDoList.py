@@ -4,12 +4,12 @@ PLUGIN_METADATA = {
     'name': 'ToDoList',  # RText component is allowed
     'description': 'ToDoList',  # RText component is allowed
     'author': 'FangGiGi',
-    'link': '',
+    'link': 'https://github.com/Flash-Z/MCDR-ToDoList',
 }
 
 import os
 import json
-# import time
+import time
 from mcdreforged.api.rtext import *
 from mcdreforged.api.decorator import new_thread
 
@@ -65,7 +65,7 @@ def operate_list(server, info, args):
                                          f'!!td add {name} {list_dic.get(name)["detail"]} {list_dic.get(name)["progress"]}')
                     .h(
                         f'§r点击项目名称以修改信息\n'
-                        f'§7创建者:§6 {list_dic.get(name)["creator"]}\n',
+                        f'§7最后修改者:§6 {list_dic.get(name)["creator"]} §7时间:§6 {list_dic.get(name)["time"]}\n',
                         f'§7项目描述:§6 {list_dic.get(name)["detail"]}\n',
                         f'§7进度描述:§6 {list_dic.get(name)["progress"]}'
                     ),
@@ -95,6 +95,7 @@ def operate_list(server, info, args):
         if args[1] == "add":
             list_dic[args[2]] = {
                 'creator': info.player,
+                'time': time.strftime('%Y-%m-%d %H:%M'),
                 'detail': args[3],
                 'progress': args[4]
             }
