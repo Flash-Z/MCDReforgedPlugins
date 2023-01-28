@@ -58,7 +58,11 @@ def operate_list(server, info, args):
     elif len(args) == 2:
         if args[1] == "list" or args[1] == "l":
             c = ['']
-            
+
+            list_head = RText(f'================== §bToDoList §r==================\n').c(
+                RAction.suggest_command, f'!!td list').h(f'§b!!td list\n')
+            c.append(list_head)
+
             for name, list_info in list_dic.items():
                 list_msg = RTextList(
                     f'- ',
