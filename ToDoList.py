@@ -41,7 +41,7 @@ def save():
 
 def search(name):
     for k, v in list_dic.items():
-        if name in v['detail']:
+        if name == k:
             return k
 
 @new_thread(PLUGIN_METADATA["name"])
