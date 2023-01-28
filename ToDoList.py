@@ -18,6 +18,7 @@ config_path = './config/ToDoList.json'
 
 help_head = """
 ================== §bToDoList §r==================
+以下命令前缀也可只打出首字母，例如(list->l)
 """.format(prefix=prefix)
 help_body = {
     f"§b{prefix}": "§r显示本帮助信息",
@@ -55,7 +56,7 @@ def operate_list(server, info, args):
         server.reply(info, RTextList(*(head + body)))
     
     elif len(args) == 2:
-        if args[1] == "list":
+        if args[1] == "list" or "l":
             c = ['']
             
             for name, list_info in list_dic.items():
@@ -74,7 +75,7 @@ def operate_list(server, info, args):
                 c.append(list_msg)
             server.reply(info, RTextList(*c))
         
-        elif args[1] == "reload":
+        elif args[1] == "reload" or "r":
             try:
                 read()
                 server.say('§b[ToDoList]§a由玩家§d{}§a发起的ToDoList重载成功'.format(info.player))
@@ -82,7 +83,7 @@ def operate_list(server, info, args):
                 server.say('§b[ToDoList]§4由玩家§d{}§4发起的ToDoList重载失败：{}'.format(info.player, e))
 
     elif len(args) == 3:
-        if args[1] == "del":
+        if args[1] == "del" or "d":
             name = search(args[2])
             if name:
                 del list_dic[name]
@@ -92,7 +93,7 @@ def operate_list(server, info, args):
                 server.reply(info, f"§b[ToDoList]§4未查询到 §d{args[2]} §4对应的项目")
             
     elif len(args) == 5:
-        if args[1] == "add":
+        if args[1] == "add" or "d":
             list_dic[args[2]] = {
                 'creator': info.player,
                 'time': time.strftime('%Y-%m-%d %H:%M'),
