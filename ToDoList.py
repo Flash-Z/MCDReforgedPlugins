@@ -97,7 +97,7 @@ def operate_list(server, info, args):
                 server.reply(info, f"§b[ToDoList]§4未查询到 §d{args[2]} §4对应的项目")
             
     elif len(args) == 5:
-        if args[1] == "add" or args[1] == "d":
+        if args[1] == "add" or args[1] == "a":
             list_dic[args[2]] = {
                 'creator': info.player,
                 'time': time.strftime('%Y-%m-%d %H:%M'),
