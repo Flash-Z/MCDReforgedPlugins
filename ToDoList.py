@@ -23,6 +23,7 @@ help_head = """
 help_body = {
     f"§b{prefix}": "§r显示本帮助信息",
     f"§b{prefix} list": "§r显示ToDoList",
+    f"§b{prefix} del <name>": "§r删除<name>",
     f"§b{prefix} reload": "§r重载插件配置",
     f"§b{prefix} add <name> <detail> <progress>": "§r添加/修改名为<name>的项目，参数为描述与进度",
 }
@@ -66,6 +67,8 @@ def operate_list(server, info, args):
             for name, list_info in list_dic.items():
                 list_msg = RTextList(
                     f'- ',
+                    RText(f'[×] ', color = RColor.red).c(RAction.suggest_command, f'!!td del {name}')
+                        .h(RText(f'Delete', color = RColor.red)),
                     RText(f'§b{name}').c(RAction.suggest_command, 
                                          f'!!td add {name} {list_dic.get(name)["detail"]} {list_dic.get(name)["progress"]}')
                     .h(
@@ -105,7 +108,7 @@ def operate_list(server, info, args):
                 'progress': args[4]
             }
             save()
-            server.reply(info, f'§b[ToDoList]§a已添加ToDo{args[2]}')
+            server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
 
 def on_load(server,old):
     server.register_help_message(f'{prefix}', RText('ToDoList').h('点击查看帮助'))
