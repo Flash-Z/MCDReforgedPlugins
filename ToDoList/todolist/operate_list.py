@@ -18,13 +18,13 @@ def operate_list(server, info, args):
         if args[1] == "list" or args[1] == "l":
             c = ['']
 
-            list_head = RText(f'================== §bToDoList §r==================\n').c(
-                RAction.suggest_command, f'!!td list').h(f'§b!!td list\n')
+            list_head = RText(f'================== §bToDoList §r==================').c(
+                RAction.suggest_command, f'!!td list').h(f'§b!!td list')
             c.append(list_head)
 
             for name, list_info in fun.list_dic.items():
                 list_msg = RTextList(
-                    f'- ',
+                    f'\n- ',
                     RText(f'[×] ', color = RColor.red).c(RAction.suggest_command, f'!!td del {name}')
                         .h(RText(f'Delete', color = RColor.red)),
                     RText(f'§b{name}').c(RAction.suggest_command, 
@@ -34,8 +34,7 @@ def operate_list(server, info, args):
                         f'§7最后修改者:§6 {fun.list_dic.get(name)["creator"]} §7时间:§6 {fun.list_dic.get(name)["time"]}\n',
                         f'§7项目描述:§6 {fun.list_dic.get(name)["detail"]}\n',
                         f'§7进度描述:§6 {fun.list_dic.get(name)["progress"]}'
-                    ),
-                    '\n'
+                    )
                 )
                 c.append(list_msg)
             server.reply(info, RTextList(*c))
