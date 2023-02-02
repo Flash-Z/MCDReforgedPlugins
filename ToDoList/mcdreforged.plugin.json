@@ -2,7 +2,10 @@
   "id": "todolist",
   "version": "1.0.0",
   "name": "ToDoList",
-  "description": "ToDoList",
-  "author": "Flash-",
+  "description": {
+    "en_us": "ToDoList",
+    "zh_cn": "ToDoList，待办清单"
+  },
+  "author": "Flash-Z",
   "link": "https://github.com/Flash-Z/MCDR-ToDoList"
 }
