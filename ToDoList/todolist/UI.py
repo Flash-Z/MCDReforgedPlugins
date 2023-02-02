@@ -2,7 +2,7 @@ prefix = '!!td'
 
 help_head = """
 ================== §bToDoList §r==================
-以下命令前缀也可只打出首字母，例如(list->l)
+以下命令前缀也可只打出首字母，例如(§blist->l§r)
 """.format(prefix=prefix)
 help_body = {
     f"§b{prefix}": "§r显示本帮助信息",
