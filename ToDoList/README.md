@@ -4,6 +4,5 @@
 ![!!td lis](https://raw.githubusercontent.com/Flash-Z/MCDR-ToDoList/main/assets/Snipaste_2023-02-01_21-58-39.png)
 ## ToDo:
 1. 打包插件
-2. Notes
-3. tags功能（已在配置文件中预留，等待填坑）
-4. 分页功能
+2. tags功能（已在配置文件中预留，等待填坑）
+3. 分页功能
