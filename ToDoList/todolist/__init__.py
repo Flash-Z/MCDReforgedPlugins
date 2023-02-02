@@ -7,6 +7,8 @@ from todolist.UI import prefix
 
 def on_load(server,old):
     server.register_help_message(f'{prefix}', RText('ToDoList').h('点击查看帮助'))
+    if not os.path.exists(fun.file_path):
+            os.mkdir(fun.file_path)
     if not os.path.isfile(fun.todolist_path):
         fun.save()
     else:

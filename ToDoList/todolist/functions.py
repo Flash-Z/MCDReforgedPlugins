@@ -7,8 +7,6 @@ class functions:
     todolist_path = file_path + 'ToDoList.json'
 
     def read():
-        if(not os.path.exists(functions.file_path)):
-            os.mkdir(functions.file_path)
         with open(functions.todolist_path, encoding='utf-8') as f:
             functions.list_dic = json.load(f)
 
