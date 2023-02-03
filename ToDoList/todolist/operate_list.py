@@ -33,7 +33,7 @@ def operate_list(server, info, args):
                         f'§r点击项目名称以修改信息\n'
                         f'§7最后修改者:§6 {fun.list_dic.get(name)["creator"]} §7时间:§6 {fun.list_dic.get(name)["time"]}\n',
                         # f'§7项目类别:§6 {fun.list_dic.get(name)["tags"]}\n',
-                        f'§7项目描述:§6 {fun.list_dic.get(name)["detail"]}\n',
+                        f'§7项目描述:§6 {fun.list_dic.get(name)["detail"][0]}\n',
                         f'§7进度描述:§6 {fun.list_dic.get(name)["progress"]}'
                     )
                 )
@@ -63,20 +63,20 @@ def operate_list(server, info, args):
                 'creator': info.player,
                 'time': time.strftime('%Y-%m-%d %H:%M'),
                 'tags':['defult'],
-                'detail': args[3],
+                'detail': [args[3],args[4]],
                 'progress': args[4]
             }
             fun.save()
             server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
             
-    elif len(args) == 6:
-        if args[1] == "add" or args[1] == "a":
-            fun.list_dic[args[2]] = {
-                'creator': info.player,
-                'time': time.strftime('%Y-%m-%d %H:%M'),
-                'category':args[5],
-                'detail': args[3],
-                'progress': args[4]
-            }
-            fun.save()
-            server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
+    # elif len(args) == 6:
+    #     if args[1] == "add" or args[1] == "a":
+    #         fun.list_dic[args[2]] = {
+    #             'creator': info.player,
+    #             'time': time.strftime('%Y-%m-%d %H:%M'),
+    #             'category':args[5],
+    #             'detail': [args[3],args[4]],
+    #             'progress': args[4]
+    #         }
+    #         fun.save()
+    #         server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
