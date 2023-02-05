@@ -9,5 +9,6 @@ help_body = {
     f"§b{prefix} list": "§r显示ToDoList",
     f"§b{prefix} del <name>": "§r删除<name>",
     f"§b{prefix} reload": "§r重载插件配置",
+    f"§b{prefix} add <name>": "§r添加/修改名为<name>的项目，描述与进度为空",
     f"§b{prefix} add <name> <detail> <progress>": "§r添加/修改名为<name>的项目，参数为描述与进度",
 }
