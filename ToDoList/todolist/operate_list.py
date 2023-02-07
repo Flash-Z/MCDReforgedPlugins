@@ -6,8 +6,19 @@ from todolist.UI import *
 from todolist.functions import functions as fun
 
 @new_thread("ToDoList_op_list")
-def operate_list(server, info, args):    
-    if len(args) == 1:
+def operate_list(server, info, args):
+    if args[1] == "add" or args[1] == "a":
+        fun.list_dic[args[2]] = {
+            'creator': info.player,
+            'time': time.strftime('%Y-%m-%d %H:%M'),
+            'tags':['defult'],
+            'detail': [args[3] if len(args) == 4 else ''],
+            'progress': args[4] if len(args) == 5 else ''
+        }
+        fun.save()
+        server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
+
+    elif len(args) == 1:
         head = [help_head]
         body = [RText(f'{k} {v}\n').c(
             RAction.suggest_command, k.replace('§b', '')).h(v)
@@ -56,38 +67,3 @@ def operate_list(server, info, args):
                 server.reply(info, f'§b[ToDoList]§a已删除ToDo {name}')
             else:
                 server.reply(info, f"§b[ToDoList]§4未查询到 §d{args[2]} §4对应的项目")
-
-        if args[1] == "add" or args[1] == "a":
-            fun.list_dic[args[2]] = {
-                'creator': info.player,
-                'time': time.strftime('%Y-%m-%d %H:%M'),
-                'tags':['defult'],
-                'detail': [''],
-                'progress': ''
-            }
-            fun.save()
-            server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
-
-    elif len(args) == 5:
-        if args[1] == "add" or args[1] == "a":
-            fun.list_dic[args[2]] = {
-                'creator': info.player,
-                'time': time.strftime('%Y-%m-%d %H:%M'),
-                'tags':['defult'],
-                'detail': [args[3]],
-                'progress': args[4]
-            }
-            fun.save()
-            server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
-            
-    # elif len(args) == 6:
-    #     if args[1] == "add" or args[1] == "a":
-    #         fun.list_dic[args[2]] = {
-    #             'creator': info.player,
-    #             'time': time.strftime('%Y-%m-%d %H:%M'),
-    #             'category':args[5],
-    #             'detail': [args[3],args[4]],
-    #             'progress': args[4]
-    #         }
-    #         fun.save()
-    #         server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
