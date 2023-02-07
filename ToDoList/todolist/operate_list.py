@@ -28,7 +28,7 @@ def operate_list(server, info, args):
                     RText(f'[×] ', color = RColor.red).c(RAction.suggest_command, f'!!td del {name}')
                         .h(RText(f'Delete', color = RColor.red)),
                     RText(f'§b{name}').c(RAction.suggest_command, 
-                                         f'!!td add {name} {fun.list_dic.get(name)["detail"]} {fun.list_dic.get(name)["progress"]}')
+                                         f'!!td add {name} {fun.list_dic.get(name)["detail"][0]} {fun.list_dic.get(name)["progress"]}')
                     .h(
                         f'§r点击项目名称以修改信息\n'
                         f'§7最后修改者:§6 {fun.list_dic.get(name)["creator"]} §7时间:§6 {fun.list_dic.get(name)["time"]}\n',
