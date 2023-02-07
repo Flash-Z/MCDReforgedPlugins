@@ -7,6 +7,13 @@ from todolist.functions import functions as fun
 
 @new_thread("ToDoList_op_list")
 def operate_list(server, info, args):
+    if len(args) == 1:
+        head = [help_head]
+        body = [RText(f'{k} {v}\n').c(
+            RAction.suggest_command, k.replace('§b', '')).h(v)
+                for k, v in help_body.items()]
+        server.reply(info, RTextList(*(head + body)))
+
     if args[1] == "add" or args[1] == "a":
         fun.list_dic[args[2]] = {
             'creator': info.player,
@@ -17,13 +24,6 @@ def operate_list(server, info, args):
         }
         fun.save()
         server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
-
-    elif len(args) == 1:
-        head = [help_head]
-        body = [RText(f'{k} {v}\n').c(
-            RAction.suggest_command, k.replace('§b', '')).h(v)
-                for k, v in help_body.items()]
-        server.reply(info, RTextList(*(head + body)))
     
     elif len(args) == 2:
         if args[1] == "list" or args[1] == "l":
