@@ -45,7 +45,7 @@ def operate_list(server, info, args):
                         f'§7最后修改者:§6 {fun.list_dic.get(name)["creator"]} §7时间:§6 {fun.list_dic.get(name)["time"]}',
                         # f'\n§7项目类别:§6 {fun.list_dic.get(name)["tags"]}',
                         f'\n§7项目描述:§6 {fun.list_dic.get(name)["detail"][0]}' if fun.list_dic.get(name)["detail"][0] !="" else "",
-                        f'\n§7进度描述:§6 {fun.list_dic.get(name)["progress"]}' if fun.list_dic.get(name)["detail"][0] !="" else ""
+                        f'\n§7进度描述:§6 {fun.list_dic.get(name)["progress"]}' if fun.list_dic.get(name)["progress"] !="" else ""
                     )
                 )
                 c.append(list_msg)
