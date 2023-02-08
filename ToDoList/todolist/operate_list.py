@@ -27,16 +27,16 @@ def operate_list(server, info, args):
     
     elif len(args) == 2:
         if args[1] == "list" or args[1] == "l":
-            c = ['']
+            # c = ['']
 
-            list_head = RText(f'================== §bToDoList §r==================').c(
-                RAction.suggest_command, f'!!td list').h(f'§b!!td list')
-            c.append(list_head)
+            # list_head = RText(f'================== §bToDoList §r==================').c(
+            #     RAction.suggest_command, f'!!td list').h(f'§b!!td list')
+            # c.append(list_head)
 
-            for name, list_info in fun.list_dic.items():
-                list_msg = get_list(name)
-                c.append(list_msg)
-            server.reply(info, RTextList(*c))
+            # for name, list_info in fun.list_dic.items():
+            #     list_msg = get_list(name)
+            #     c.append(list_msg)
+            server.reply(info, RTextList(*get_list()))
         
         elif args[1] == "reload" or args[1] == "r":
             try:
