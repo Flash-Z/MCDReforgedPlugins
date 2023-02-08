@@ -34,20 +34,7 @@ def operate_list(server, info, args):
             c.append(list_head)
 
             for name, list_info in fun.list_dic.items():
-                list_msg = RTextList(
-                    f'\n- ',
-                    RText(f'[×] ', color = RColor.red).c(RAction.suggest_command, f'!!td del {name}')
-                        .h(RText(f'Delete', color = RColor.red)),
-                    RText(f'§b{name}').c(RAction.suggest_command, 
-                                         f'!!td add {name} {fun.list_dic.get(name)["detail"][0]} {fun.list_dic.get(name)["progress"]}')
-                    .h(
-                        f'§r点击项目名以修改信息\n'
-                        f'§7最后修改者:§6 {fun.list_dic.get(name)["creator"]} §7时间:§6 {fun.list_dic.get(name)["time"]}',
-                        # f'\n§7项目类别:§6 {fun.list_dic.get(name)["tags"]}',
-                        f'\n§7项目描述:§6 {fun.list_dic.get(name)["detail"][0]}' if fun.list_dic.get(name)["detail"][0] !="" else "",
-                        f'\n§7进度描述:§6 {fun.list_dic.get(name)["progress"]}' if fun.list_dic.get(name)["progress"] !="" else ""
-                    )
-                )
+                list_msg = get_list(name)
                 c.append(list_msg)
             server.reply(info, RTextList(*c))
         
