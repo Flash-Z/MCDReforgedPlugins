@@ -7,8 +7,6 @@ from todolist.functions import functions as fun
 
 @new_thread("ToDoList_op_list")
 def operate_list(server, info, args):
-    if args[1] == "test":
-        server.reply(info, get_simple_taged_list("defult"))
     if len(args) == 1:
         head = [help_head]
         body = [RText(f'{k} {v}\n').c(
