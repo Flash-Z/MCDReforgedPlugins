@@ -25,7 +25,7 @@ def operate_list(server, info, args):
             'creator': info.player,
             'time': time.strftime('%Y-%m-%d %H:%M'),
             'tags':tag_list,
-            'detail': [args[3] if len(args) == 4 else ''],
+            'detail': [args[3] if len(args) in [4, 5] else ''],
             'progress': args[4] if len(args) == 5 else ''
         }
         fun.save()
