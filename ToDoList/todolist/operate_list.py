@@ -38,7 +38,7 @@ def operate_list(server, info, args):
             server.reply(info, RTextList(*get_list(args[2])))
         elif len(args) == 5: 
             if args[2] == "add" or args[2] == "a": # !!td tag add <name> <tag>
-                if args[4] not in fun.list_dic.get(name)["tags"]:
+                if args[4] not in fun.list_dic.get(args[3])["tags"]:
                     fun.list_dic[args[3]]["tags"].append(args[4])
                     fun.save()
                     server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[3]} 的 tag {args[4]}')
