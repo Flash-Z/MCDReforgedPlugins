@@ -46,6 +46,7 @@ def operate_list(server, info, args):
                 if args[4] != "defult":
                     new_tag = []
                     temp_tag = fun.list_dic[args[3]]["tags"]
+                    found_oldtag = False
                     for old_tag in temp_tag:
                         if old_tag != args[4]:
                             new_tag.append(old_tag)

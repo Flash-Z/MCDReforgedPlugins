@@ -28,6 +28,7 @@ def get_list(target_tag=""):
 
     for name, list_info in fun.list_dic.items():
         tag_list = f''
+        include = False
         for tag in fun.list_dic.get(name)["tags"]:
             if tag not in tag_list and tag != "defult":
                 tag_list += f'{tag} '
