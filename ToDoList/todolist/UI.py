@@ -5,7 +5,7 @@ prefix = '!!td'
 
 help_head = """
 ================== §bToDoList §r==================
-以下命令前缀也可只打出首字母，例如(§blist->l§r)
+以下命令(tag相关除外)前缀也可只打出首字母，例如(§blist->l§r)
 """.format(prefix=prefix)
 help_body = {
     f"§b{prefix}": "§r显示本帮助信息",
@@ -13,6 +13,10 @@ help_body = {
     f"§b{prefix} del <name>": "§r删除<name>",
     f"§b{prefix} reload": "§r重载插件配置",
     f"§b{prefix} add <name> (<detail>) (<progress>)": "§r添加/修改<name>项目，可选参数为描述与进度",
+    f"§b{prefix} tag list": "§r列出所有tag",
+    f"§b{prefix} tag list <tag>": "§r列出<tag>下的项目",
+    f"§b{prefix} tag add <name> <tag>": "§r为<name>项目添加tag",
+    f"§b{prefix} tag del <name> <tag>": "§r为<name>项目删除tag",
 }
 
 def get_list(target_tag=""):
@@ -36,7 +40,7 @@ def get_list(target_tag=""):
                             RText(f'[×] ', color = RColor.red).c(RAction.suggest_command, f'!!td del {name}')
                                 .h(RText(f'Delete', color = RColor.red)),
                             RText(f'[T+] ', color = RColor.green).c(RAction.suggest_command, f'!!td tag add {name} ')
-                                .h(RText(f'Add tag', color = RColor.green)),
+                                .h(RText(f'Add a tag', color = RColor.green)),
                                 RText(f'[T-] ', color = RColor.green).c(RAction.suggest_command, f'!!td tag del {name} ')
                                 .h(RText(f'Delete a tag', color = RColor.red)),
                             RText(f'§b{name}').c(RAction.suggest_command, 
