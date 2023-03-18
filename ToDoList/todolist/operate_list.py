@@ -41,7 +41,7 @@ def operate_list(server, info, args):
                 if args[4] not in fun.list_dic[args[3]]:
                     fun.list_dic[args[3]]["tags"].append(args[4])
                     fun.save()
-                    server.reply(info, f'§b[ToDoList]§a已更新ToDo {args[2]} 的 tag {args[4]}')
+                    server.reply(info, f'§b[ToDoList]§a已更新ToDo {args[3]} 的 tag {args[4]}')
             if args[2] == "del" or args[2] == "d": # !!td tag del <name> <tag>
                 if args[4] != "defult":
                     new_tag = []
@@ -55,9 +55,9 @@ def operate_list(server, info, args):
                     if found_oldtag:
                         fun.list_dic[args[3]]["tags"] = new_tag
                         fun.save()
-                        server.reply(info, f'§b[ToDoList]§a已删除ToDo {args[2]} 的 tag {args[4]}')
+                        server.reply(info, f'§b[ToDoList]§a已删除ToDo {args[3]} 的 tag {args[4]}')
                     else:
-                        server.reply(info, f'§b[ToDoList]§4ToDo {args[2]} 没有 tag {args[4]}')
+                        server.reply(info, f'§b[ToDoList]§4ToDo {args[3]} 没有 tag {args[4]}')
                 else:
                     server.reply(info, f'§b[ToDoList]§4不能删除 defult tag')
             
