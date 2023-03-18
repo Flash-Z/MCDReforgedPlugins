@@ -29,19 +29,19 @@ def operate_list(server, info, args):
             'progress': args[4] if len(args) == 5 else ''
         }
         fun.save()
-        server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
+        server.reply(info, f'§b[ToDoList]§a已更新ToDo {args[2]}')
     
     elif args[1] == "tag" or args[1] == "t":
-        if len(args) == 2:
+        if len(args) == 2: # 返回所有tag列表
             server.reply(info, get_tags())
-        elif len(args) == 3:
+        elif len(args) == 3: # 返回相应tag列表
             server.reply(info, RTextList(*get_taged_list(args[2])))
         elif len(args) == 5: 
             if args[2] == "add" or args[2] == "a": # !!td tag add <name> <tag>
                 if args[4] not in fun.list_dic[args[3]]:
                     fun.list_dic[args[3]]["tags"].append(args[4])
                     fun.save()
-                    server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
+                    server.reply(info, f'§b[ToDoList]§a已更新ToDo {args[2]} 的 tag {args[4]}')
             if args[2] == "del" or args[2] == "d": # !!td tag del <name> <tag>
                 new_tag = []
                 temp_tag = fun.list_dic[args[3]]["tags"]
@@ -50,7 +50,7 @@ def operate_list(server, info, args):
                         new_tag.append(old_tag)
                 fun.list_dic[args[3]]["tags"] = new_tag
                 fun.save()
-                server.reply(info, f'§b[ToDoList]§a已添加ToDo {args[2]}')
+                server.reply(info, f'§b[ToDoList]§a已删除ToDo {args[2]} 的 tag {args[4]}')
             
             
     elif len(args) == 2:
