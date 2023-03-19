@@ -13,8 +13,8 @@ help_body = {
     f"§b{prefix} del <name>": "§r删除<name>",
     f"§b{prefix} reload": "§r重载插件配置",
     f"§b{prefix} add <name> (<detail>) (<progress>)": "§r添加/修改<name>项目，可选参数为描述与进度",
-    f"§b{prefix} tag list": "§r列出所有tag",
-    f"§b{prefix} tag list <tag>": "§r列出<tag>下的项目",
+    f"§b{prefix} tag": "§r列出所有tag",
+    f"§b{prefix} tag <tag>": "§r列出<tag>下的项目",
     f"§b{prefix} tag add <name> <tag>": "§r为<name>项目添加tag",
     f"§b{prefix} tag del <name> <tag>": "§r为<name>项目删除tag",
 }

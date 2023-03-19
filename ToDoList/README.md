@@ -11,8 +11,8 @@
 | !!td add \<name> (\<detail> \<progress>) | 添加项目,后两项为可选参数 |
 | !!td del \<name> | 删除名为\<name>的项目 |
 | !!td reload | 重载配置文件 |
-| !!td tag list | 列出所有tag |
-| !!td tag list \<tag> | 列出\<tag>下的项目 |
+| !!td tag | 列出所有tag |
+| !!td tag \<tag> | 列出\<tag>下的项目 |
 | !!td tag add \<name> \<tag> | 为\<name>项目添加\<tag> |
 | !!td tag del \<name> \<tag> | 为\<name>项目删除\<tag> |
 注：指令第二项也可只输入首字母，如 !!td list->!!td l
