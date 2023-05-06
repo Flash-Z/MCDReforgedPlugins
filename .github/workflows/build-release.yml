@@ -57,7 +57,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update release title"
-          branch: update-release-title
+          branch: main
           title: ${{ steps.set_release_title.outputs.release_title }}
           body: |
             This is an automated release created by GitHub Actions.
