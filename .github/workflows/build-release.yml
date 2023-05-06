@@ -1,0 +1,76 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Find plugin folders
+      run: |
+        find . -maxdepth 2 -type f -name "mcdreforged.plugin.json" -print0 \
+          | xargs -0 -I {} dirname {} \
+          | xargs -I {} sh -c 'echo "::set-env name=PLUGIN_DIRS::${PLUGIN_DIRS} {}"'
+
+    - name: Check version number
+      run: |
+        for plugin_dir in ${{ env.PLUGIN_DIRS }}; do
+          version=`jq -r '.version' ${plugin_dir}/mcdreforged.plugin.json`
+          if [ -z "${version}" ]; then
+            echo "Version number not found in ${plugin_dir}"
+            continue
+          fi
+          if git diff --name-only HEAD^ HEAD | grep -q "^${plugin_dir}/mcdreforged.plugin.json$"; then
+            echo "Version number has been updated to ${version} in ${plugin_dir}"
+            echo "::set-env name=PLUGIN_DIR::${PLUGIN_DIR} ${plugin_dir}"
+          else
+            echo "Version number has not been updated in ${plugin_dir}"
+          fi
+        done
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: pip install --upgrade pip && pip install pyyaml
+
+    - name: Compress files
+      run: |
+        for plugin_dir in ${{ env.PLUGIN_DIRS }}; do
+          version=`jq -r '.version' ${plugin_dir}/mcdreforged.plugin.json`
+          zip -r ${plugin_dir##*/}-v${version}.mcdr ${plugin_dir}/* -x ${plugin_dir}/mcdreforged.plugin.json
+          mv ${plugin_dir##*/}-v${version}.mcdr ${plugin_dir##*/}-v${version}.zip
+        done
+
+    - name: Create release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./${{ env.PLUGIN_DIR }}/${{ env.PLUGIN_DIR##*/}}-v${{ steps.build-and-release.outputs.version }}.zip
+        asset_name: ${{ env.PLUGIN_DIR##*/}}-v${{ steps.build-and-release.outputs.version }}.mcdr
+        asset_content_type: application/zip
+
+    - name: Set release title
+      run: |
+        version=`jq -r '.version' ${{ env.PLUGIN_DIR }}/mcdreforged.plugin.json`
+        echo "::set-env name=RELEASE_TITLE::${{ env.PLUGIN_DIR##*/}}-v${version}"
+
+    - name: Publish release
+      uses: peter-evans/create-pull-request@v3.8.2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Update release title"
+        branch: update-release-title
+        title: ${{ env.RELEASE_TITLE }}
