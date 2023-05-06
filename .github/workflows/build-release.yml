@@ -54,19 +54,11 @@ jobs:
           mv ${plugin_dir##*/}-v${version}.mcdr ${plugin_dir##*/}-v${version}.zip
         done
 
-    - name: Create release
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./${{ env.PLUGIN_DIR }}/${{ env.PLUGIN_DIR##*/}}-v${{ steps.build-and-release.outputs.version }}.zip
-        asset_name: ${{ env.PLUGIN_DIR##*/}}-v${{ steps.build-and-release.outputs.version }}.mcdr
-        asset_content_type: application/zip
-
     - name: Set release title
       run: |
         version=`jq -r '.version' ${{ env.PLUGIN_DIR }}/mcdreforged.plugin.json`
-        echo "::set-env name=RELEASE_TITLE::${{ env.PLUGIN_DIR##*/}}-v${version}"
-
+        echo "::set-env name=RELEASE_TITLE::$(basename ${{ env.PLUGIN_DIR }})-v${version}"
+    
     - name: Publish release
       uses: peter-evans/create-pull-request@v3.8.2
       with:
@@ -74,3 +66,7 @@ jobs:
         commit-message: "Update release title"
         branch: update-release-title
         title: ${{ env.RELEASE_TITLE }}
+        body: |
+          This is an automated release created by GitHub Actions.
+          Please refer to the changelog for details.
+        labels: release
