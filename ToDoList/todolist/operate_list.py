@@ -67,6 +67,8 @@ def operate_list(server, info, args):
                         server.reply(info, f'§b[ToDoList]§4ToDo {args[3]} 没有 tag {args[4]}')
                 else:
                     server.reply(info, f'§b[ToDoList]§4不能删除 defult tag')
+        else:
+            server.reply(info, f"§b[ToDoList]§4指令输入不正确，请使用§d!!td§4查询帮助")
         
     elif len(args) == 2:    
         if args[1] == "list" or args[1] == "l": # !!td list列出所有项目
