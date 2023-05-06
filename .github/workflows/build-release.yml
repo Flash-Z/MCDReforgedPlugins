@@ -52,14 +52,17 @@ jobs:
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
 
-      - name: Publish release
-        uses: peter-evans/create-pull-request@v3.8.2
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Update release title"
-          branch: update-release-title
-          title: ${{ steps.set_release_title.outputs.release_title }}
+          tag_name: ${{ env.PLUGIN_DIR }}-v${{ steps.set_release_title.outputs.release_title }}
+          release_name: ${{ env.PLUGIN_DIR }}-v${{ steps.set_release_title.outputs.release_title }}
           body: |
-            This is an automated release created by GitHub Actions.
-            Please refer to the changelog for details.
-          labels: release
+            Release for ${{ env.PLUGIN_DIR }} version ${{ steps.set_release_title.outputs.release_title }}
+          draft: false
+          prerelease: false
+        
