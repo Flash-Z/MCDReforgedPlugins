@@ -1,4 +1,4 @@
-name: Update release title
+name: Update release title and package plugin
 
 on:
   push:
@@ -63,6 +63,20 @@ jobs:
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
 
+      - name: Package plugin
+        id: package_plugin
+        run: |
+          plugin_dir="${{ env.PLUGIN_DIR }}"
+          id="${{ steps.check_version_number.outputs.id }}"
+          version="${{ steps.check_version_number.outputs.version }}"
+          zip_filename="$id-v$version.mcdr.zip"
+          cd "$plugin_dir"
+          zip -r "../$zip_filename" .
+          cd ..
+          mv "$zip_filename" "$id-v$version.mcdr.zip"
+        env:
+          PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
@@ -76,3 +90,5 @@ jobs:
             Release for ${{ steps.check_version_number.outputs.id }} version ${{ steps.check_version_number.outputs.version }}
           draft: false
           prerelease: false
+          asset_paths: |
+            ${{ steps.package_plugin.outputs.zip_filename }}
