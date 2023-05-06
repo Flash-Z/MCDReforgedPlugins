@@ -7,7 +7,7 @@ from todolist.functions import functions as fun
 
 @new_thread("ToDoList_op_list")
 def operate_list(server, info, args):
-    if len(args) == 1:
+    if len(args) == 1: # !!td
         head = [help_head]
         body = [RText(f'{k} {v}\n').c(
             RAction.suggest_command, k.replace('§b', '')).h(v)
@@ -67,13 +67,12 @@ def operate_list(server, info, args):
                         server.reply(info, f'§b[ToDoList]§4ToDo {args[3]} 没有 tag {args[4]}')
                 else:
                     server.reply(info, f'§b[ToDoList]§4不能删除 defult tag')
-            
-            
-    elif len(args) == 2:
-        if args[1] == "list" or args[1] == "l":
+        
+    elif len(args) == 2:    
+        if args[1] == "list" or args[1] == "l": # !!td list列出所有项目
             server.reply(info, RTextList(*get_list()))
         
-        elif args[1] == "reload" or args[1] == "r":
+        elif args[1] == "reload" or args[1] == "r": # 重载配置文件
             try:
                 fun.read()
                 server.say('§b[ToDoList]§a由玩家§r{}§a发起的ToDoList重载成功'.format(info.player))
@@ -81,7 +80,7 @@ def operate_list(server, info, args):
                 server.say('§b[ToDoList]§4由玩家§r{}§4发起的ToDoList重载失败：{}'.format(info.player, e))
 
     elif len(args) == 3:
-        if args[1] == "del" or args[1] == "d":
+        if args[1] == "del" or args[1] == "d": # !!td del <name> 删除<name>项目
             name = fun.search(args[2])
             if name:
                 del fun.list_dic[name]
@@ -89,3 +88,5 @@ def operate_list(server, info, args):
                 server.reply(info, f'§b[ToDoList]§a已删除ToDo {name}')
             else:
                 server.reply(info, f"§b[ToDoList]§4未查询到 §d{args[2]} §4对应的项目")
+    else:
+        server.reply(info, f"§b[ToDoList]§4指令输入不正确，请使用§d!!td§4查询帮助")
