@@ -37,7 +37,7 @@ jobs:
               continue
             fi
             if [ -z "$version" ]; then
-              echo "version number not found in $mcdreforged_plugin_json"
+              echo "version number not found in $mcdreforged.plugin.json"
               continue
             fi
             git fetch --tags
@@ -51,6 +51,7 @@ jobs:
             fi
             echo "::set-output name=id::$id"
             echo "::set-output name=version::$version"
+            echo "::set-output name=zip_filename::$id-v$version.mcdr.zip"
           done
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
@@ -73,7 +74,8 @@ jobs:
           cd "$plugin_dir"
           zip -r "../$zip_filename" .
           cd ..
-          mv "$zip_filename" "$id-v$version.mcdr"
+          mv "$zip_filename" "$id-v$version.mcdr.zip"
+          echo "::set-output name=zip_filename::$id-v$version.mcdr.zip"
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
 
@@ -90,5 +92,14 @@ jobs:
             Release for ${{ steps.check_version_number.outputs.id }} version ${{ steps.check_version_number.outputs.version }}
           draft: false
           prerelease: false
-          asset_paths: |
-            ${{ steps.package_plugin.outputs.zip_filename }}
+      
+      - name: Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.package_plugin.outputs.zip_filename }}
+          asset_name: ${{ steps.package_plugin.outputs.zip_filename }}
+          asset_content_type: application/zip
