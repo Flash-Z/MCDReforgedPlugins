@@ -59,8 +59,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
         with:
-          tag_name: ${{ env.PLUGIN_DIR }}-v${{ steps.set_release_title.outputs.release_title }}
-          release_name: ${{ env.PLUGIN_DIR }}-v${{ steps.set_release_title.outputs.release_title }}
+          tag_name: ${{ steps.check_version_number.outputs.plugin_dirs }}-v${{ steps.set_release_title.outputs.release_title }}
+          release_name: ${{ steps.check_version_number.outputs.plugin_dirs }}-v${{ steps.set_release_title.outputs.release_title }}
           body: |
             Release for ${{ env.PLUGIN_DIR }} version ${{ steps.set_release_title.outputs.release_title }}
           draft: false
