@@ -31,11 +31,10 @@ jobs:
               continue
             fi
             git fetch --tags
-            latest_release_tag=$(git describe --tags --abbrev=0)
-            latest_release_version=$(echo "$latest_release_tag" | sed 's/.*\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1/')
-            if [ "$version" == "$latest_release_version" ]; then
+            latest_release_tag=$(git describe --tags --abbrev=0 --always)
+            if [ "$latest_release_tag" == "$version" ]; then
               echo "Version $version has already been released"
-            elif [ "$(printf '%s\n' "$version" "$latest_release_version" | sort -V | head -n1)" != "$version" ]; then
+            elif [ "$(printf '%s\n' "$version" "$latest_release_tag" | sort -V | head -n1)" != "$version" ]; then
               echo "Version $version is older than the latest release ($latest_release_tag)"
             else
               echo "Version $version is newer than the latest release ($latest_release_tag)"
