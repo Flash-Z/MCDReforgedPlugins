@@ -59,6 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ env.PLUGIN_DIR }}-v${{ steps.set_release_title.outputs.release_title }}
           release_name: ${{ env.PLUGIN_DIR }}-v${{ steps.set_release_title.outputs.release_title }}
           body: |
