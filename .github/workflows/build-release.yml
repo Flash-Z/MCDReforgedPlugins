@@ -20,6 +20,7 @@ jobs:
         shell: bash
 
       - name: Check version number
+        id: check_version_number
         run: |
           plugin_dirs="${{ steps.find_plugin_folders.outputs.plugin_dirs }}"
           echo "Plugin directories: $plugin_dirs"
@@ -29,10 +30,13 @@ jobs:
               echo "Version number not found in $plugin_dir"
               continue
             fi
-            if git diff --name-only HEAD~1 HEAD | grep -q "^$plugin_dir/mcdreforged.plugin.json$"; then
-              echo "Version number has been updated to $version in $plugin_dir"
+            latest_release_tag=$(git describe --tags --abbrev=0)
+            if [ "$version" == "$latest_release_tag" ]; then
+              echo "Version $version has already been released"
+            elif [ "$(printf '%s\n' "$version" "$latest_release_tag" | sort -V | head -n1)" != "$version" ]; then
+              echo "Version $version is older than the latest release ($latest_release_tag)"
             else
-              echo "Version number has not been updated in $plugin_dir"
+              echo "Version $version is newer than the latest release ($latest_release_tag)"
             fi
           done
         env:
