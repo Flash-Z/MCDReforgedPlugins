@@ -69,7 +69,7 @@ jobs:
           plugin_dir="${{ env.PLUGIN_DIR }}"
           id="${{ steps.check_version_number.outputs.id }}"
           version="${{ steps.check_version_number.outputs.version }}"
-          zip_filename="$id-v$version.mcdr"
+          zip_filename="$id-v$version.mcdr.zip"
           cd "$plugin_dir"
           zip -r "../$zip_filename" .
           cd ..
