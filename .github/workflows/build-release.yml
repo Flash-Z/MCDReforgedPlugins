@@ -74,7 +74,7 @@ jobs:
           cd "$plugin_dir"
           zip -r "../$zip_filename" .
           cd ..
-          mv "$zip_filename" "$id-v$version.mcdr.zip"
+          mv "$zip_filename" "$id-v$version.mcdr"
           echo "::set-output name=zip_filename::$id-v$version.mcdr"
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
