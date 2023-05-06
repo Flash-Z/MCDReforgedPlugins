@@ -25,9 +25,19 @@ jobs:
           plugin_dirs="${{ steps.find_plugin_folders.outputs.plugin_dirs }}"
           echo "Plugin directories: $plugin_dirs"
           for plugin_dir in $plugin_dirs; do
-            version=$(jq -r '.version' "$plugin_dir/mcdreforged.plugin.json")
+            mcdreforged_plugin_json="$plugin_dir/mcdreforged.plugin.json"
+            if [ ! -f "$mcdreforged_plugin_json" ]; then
+              echo "mcdreforged.plugin.json not found in $plugin_dir"
+              continue
+            fi
+            id=$(jq -r '.id' "$mcdreforged_plugin_json")
+            version=$(jq -r '.version' "$mcdreforged_plugin_json")
+            if [ -z "$id" ]; then
+              echo "id not found in $mcdreforged_plugin_json"
+              continue
+            fi
             if [ -z "$version" ]; then
-              echo "Version number not found in $plugin_dir"
+              echo "version number not found in $mcdreforged_plugin_json"
               continue
             fi
             git fetch --tags
@@ -39,6 +49,8 @@ jobs:
             else
               echo "Version $version is newer than the latest release ($latest_release_tag)"
             fi
+            echo "::set-output name=id::$id"
+            echo "::set-output name=version::$version"
           done
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
@@ -47,8 +59,7 @@ jobs:
         id: set_release_title
         run: |
           plugin_dir="${{ env.PLUGIN_DIR }}"
-          version=$(jq -r '.version' "$plugin_dir/mcdreforged.plugin.json")
-          echo "::set-output name=release_title::$(basename $plugin_dir)-v${version}"
+          echo "::set-output name=release_title::${{ steps.check_version_number.outputs.id }}-v${{ steps.check_version_number.outputs.version }}"
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
 
@@ -59,10 +70,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
         with:
-          tag_name: ${{ steps.check_version_number.outputs.plugin_dirs }}-v${{ steps.set_release_title.outputs.release_title }}
-          release_name: ${{ steps.check_version_number.outputs.plugin_dirs }}-v${{ steps.set_release_title.outputs.release_title }}
+          tag_name: ${{ steps.check_version_number.outputs.id }}-v${{ steps.check_version_number.outputs.version }}
+          release_name: ${{ steps.check_version_number.outputs.id }}-v${{ steps.check_version_number.outputs.version }}
           body: |
-            Release for ${{ env.PLUGIN_DIR }} version ${{ steps.set_release_title.outputs.release_title }}
+            Release for ${{ steps.check_version_number.outputs.id }} version ${{ steps.check_version_number.outputs.version }}
           draft: false
           prerelease: false
-      
