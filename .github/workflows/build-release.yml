@@ -69,11 +69,11 @@ jobs:
           plugin_dir="${{ env.PLUGIN_DIR }}"
           id="${{ steps.check_version_number.outputs.id }}"
           version="${{ steps.check_version_number.outputs.version }}"
-          zip_filename="$id-v$version.mcdr.zip"
+          zip_filename="$id-v$version.mcdr"
           cd "$plugin_dir"
           zip -r "../$zip_filename" .
           cd ..
-          mv "$zip_filename" "$id-v$version.mcdr.zip"
+          mv "$zip_filename" "$id-v$version.mcdr"
         env:
           PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
 
