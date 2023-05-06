@@ -17,24 +17,26 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Find plugin folders
+      id: find_plugin_folders
       run: |
-        find . -maxdepth 2 -type f -name "mcdreforged.plugin.json" -print0 \
-          | xargs -0 -I {} dirname {} \
-          | xargs -I {} sh -c 'echo "::set-env name=PLUGIN_DIRS::${PLUGIN_DIRS} {}"'
-
+        echo "::set-output name=plugin_dirs::$(find . -maxdepth 2 -type f -name "mcdreforged.plugin.json" -print0 \
+          | xargs -0 -I {} dirname {})"
+      shell: bash
+    
     - name: Check version number
       run: |
-        for plugin_dir in ${{ env.PLUGIN_DIRS }}; do
-          version=`jq -r '.version' ${plugin_dir}/mcdreforged.plugin.json`
-          if [ -z "${version}" ]; then
-            echo "Version number not found in ${plugin_dir}"
+        plugin_dirs="${{ steps.find_plugin_folders.outputs.plugin_dirs }}"
+        for plugin_dir in $plugin_dirs; do
+          version=$(jq -r '.version' "$plugin_dir/mcdreforged.plugin.json")
+          if [ -z "$version" ]; then
+            echo "Version number not found in $plugin_dir"
             continue
           fi
-          if git diff --name-only HEAD^ HEAD | grep -q "^${plugin_dir}/mcdreforged.plugin.json$"; then
-            echo "Version number has been updated to ${version} in ${plugin_dir}"
-            echo "::set-env name=PLUGIN_DIR::${PLUGIN_DIR} ${plugin_dir}"
+          if git diff --name-only HEAD^ HEAD | grep -q "^$plugin_dir/mcdreforged.plugin.json$"; then
+            echo "Version number has been updated to $version in $plugin_dir"
+            echo "::set-env name=PLUGIN_DIR::$plugin_dir"
           else
-            echo "Version number has not been updated in ${plugin_dir}"
+            echo "Version number has not been updated in $plugin_dir"
           fi
         done
 
