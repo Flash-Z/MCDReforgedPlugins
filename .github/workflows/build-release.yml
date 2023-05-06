@@ -44,6 +44,8 @@ jobs:
           plugin_dir="${{ env.PLUGIN_DIR }}"
           version=$(jq -r '.version' "$plugin_dir/mcdreforged.plugin.json")
           echo "::set-output name=release_title::$(basename $plugin_dir)-v${version}"
+        env:
+          PLUGIN_DIR: ${{ steps.find_plugin_folders.outputs.plugin_dirs }}
 
       - name: Publish release
         uses: peter-evans/create-pull-request@v3.8.2
