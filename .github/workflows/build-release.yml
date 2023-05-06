@@ -29,7 +29,7 @@ jobs:
               echo "Version number not found in $plugin_dir"
               continue
             fi
-            if git diff --name-only HEAD^ HEAD | grep -q "^$plugin_dir/mcdreforged.plugin.json$"; then
+            if git diff --name-only HEAD~1 HEAD | grep -q "^$plugin_dir/mcdreforged.plugin.json$"; then
               echo "Version number has been updated to $version in $plugin_dir"
             else
               echo "Version number has not been updated in $plugin_dir"
