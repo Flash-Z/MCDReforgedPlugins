@@ -19,6 +19,8 @@ help_body = {
     f"§b{prefix} tag del <name> <tag>": "§r为<name>项目删除tag",
 }
 
+wrong_command = f"§b[ToDoList]§4指令输入不正确，请使用§d!!td§4查询帮助"
+
 def get_list(target_tag=""):
     c = ['']
 
